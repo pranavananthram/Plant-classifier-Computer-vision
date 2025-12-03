@@ -76,7 +76,7 @@ This script will:
 
 ---
 
-## ▶️ Running the Gradio App
+## Running the Gradio App
 
 ```bash
 python app.py
@@ -86,7 +86,7 @@ The app will launch a web UI where you can upload leaf images and get prediction
 
 ---
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 Build the image:
 
