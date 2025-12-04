@@ -1,6 +1,14 @@
 # Plant Leaf Disease Classification
 
-A deep learning project that classifies plant leaf images into disease categories using a fine-tuned MobileNet model. The project includes data preprocessing, training, evaluation, Dockerized deployment, and automated CI/CD through GitHub Actions to AWS ECS.
+End-to-end machine learning system that classifies plant leaf diseases using MobileNetV2, deployed as a fully automated, production-ready service on AWS ECS Fargate with Docker and GitHub Actions CI/CD.
+
+This project demonstrates:
+
+    * Deep Learning (PyTorch, transfer learning)
+    * Cloud Deployment (AWS ECS, ECR, Fargate)
+    * Containerization (Docker)
+    * Automated CI/CD Pipelines (GitHub Actions)
+    * Interactive Inference UI (Gradio)
 
 ---
 
