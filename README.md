@@ -1,6 +1,6 @@
 # Plant Leaf Disease Classification
 
-A deep learning project that classifies plant leaf images into disease categories using a fine-tuned MobileNet model. The project includes data preprocessing, training, evaluation, and deployment using a Docker-packaged Gradio app.
+A deep learning project that classifies plant leaf images into disease categories using a fine-tuned MobileNet model. The project includes data preprocessing, training, evaluation, Dockerized deployment, and automated CI/CD through GitHub Actions to AWS ECS.
 
 ---
 
@@ -21,12 +21,13 @@ Dataset structure:
 
 ## Features
 
-* MobileNetV2-based classifier
+* MobileNetV2-based leaf disease classifier
 * Custom augmentation pipeline
-* Training & validation loops with accuracy/loss tracking
-* Model saving in `.pth` format
-* Gradio web interface for predictions
-* Dockerized for easy deployment on AWS / Cloud / Local
+* Training & validation with metrics
+* Saves final model as `model.pth`
+* Gradio UI for easy image-based inference
+* Fully Dockerized application
+* Automated deployment to AWS ECS using GitHub Actions
 
 ---
 
@@ -36,17 +37,11 @@ Dataset structure:
 * **Input Size:** 224×224
 * **Optimizer:** Adam
 * **Loss Function:** CrossEntropyLoss
-* **Augmentations:**
-
-  * RandomResizedCrop
-  * RandomHorizontalFlip
-  * RandomRotation
-  * ColorJitter
-  * Normalization
+* **Data Augmentation:** Random crops, flips, rotations, color jitter, normalization
 
 ---
 
-## 🛠 Installation
+## Installation
 
 ### Clone the repository
 
@@ -65,14 +60,14 @@ pip install -r requirements.txt
 
 ## Training the Model
 
-```python
+```bash
 python train.py
 ```
 
 This script will:
-✔ Load dataset
+✔ Load and preprocess dataset
 ✔ Train MobileNetV2
-✔ Save `model.pth`
+✔ Save model as `model.pth`
 
 ---
 
@@ -82,25 +77,7 @@ This script will:
 python app.py
 ```
 
-The app will launch a web UI where you can upload leaf images and get predictions.
-
----
-
-## Docker Deployment
-
-Build the image:
-
-```bash
-docker build -t plant-leaf-app .
-```
-
-Run the container:
-
-```bash
-docker run -p 7860:7860 plant-leaf-app
-```
-
-Your Gradio app will now be accessible at:
+The app will be available at:
 
 ```
 http://localhost:7860
@@ -108,17 +85,50 @@ http://localhost:7860
 
 ---
 
-## Cloud Deployment 
+## Docker Deployment
 
-* Push the Docker image to **ECR**
-* Deploy via **AWS Fargate**, **EC2**, or **Lightsail Container Service**
-* Ensure security group allows port **7860**
+### Build image
+
+```bash
+docker build -t plant-leaf-app .
+```
+
+### Run container
+
+```bash
+docker run -p 7860:7860 plant-leaf-app
+```
+
+---
+
+## AWS Deployment (ECS + GitHub Actions CI/CD)
+
+This project includes a complete CI/CD pipeline using **GitHub Actions** to:
+
+1. Build the Docker image
+2. Log in to Amazon ECR
+3. Push the image to ECR
+4. Deploy the new image to an **ECS Fargate** service
+5. Automatically refresh the running task
+
+The workflow file (`.github/workflows/deploy.yml`) handles:
+
+* ECR login
+* Docker build & push
+* ECS task definition render/update
+* Automatic rollout of the new version
+
+This enables **hands-free continuous deployment** on every push to `main`.
 
 ---
 
 ## Results
 
-Include training accuracy, validation curves, confusion matrix, etc. (optional)
+You can optionally add:
+
+* Accuracy/loss graphs
+* Confusion matrix
+* Sample predictions
 
 ---
 
@@ -129,17 +139,14 @@ Include training accuracy, validation curves, confusion matrix, etc. (optional)
 ├── train.py
 ├── app.py
 ├── model.pth
-├── requirements.txt
 ├── Dockerfile
+├── requirements.txt
 ├── README.md
-└── utils/
+├── utils/
+└── .github/
+    └── workflows/
+        └── deploy.yml
 ```
-
----
-
-## Contributions
-
-Pull requests are welcome! For major changes, please open an issue first.
 
 ---
 
