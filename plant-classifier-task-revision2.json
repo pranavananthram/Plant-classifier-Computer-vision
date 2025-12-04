@@ -38,7 +38,6 @@
         }
     ],
     "cpu": "1024",
-    "enableFaultInjection": false,
     "executionRoleArn": "arn:aws:iam::103702179512:role/mlopsecsTaskExecutionRole",
     "family": "plant-classifier-task",
     "memory": "3072",
